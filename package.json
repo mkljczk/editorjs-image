@@ -1,5 +1,5 @@
 {
-  "name": "@editorjs/image",
+  "name": "@mkljczk/editorjs-image",
   "version": "2.3.5",
   "keywords": [
     "codex editor",
@@ -10,7 +10,7 @@
   ],
   "description": "Image Tool for Editor.js",
   "license": "MIT",
-  "repository": "https://github.com/editor-js/image",
+  "repository": "https://github.com/mkljczk/editorjs-image",
   "main": "./dist/bundle.js",
   "scripts": {
     "build": "webpack --mode production",
@@ -20,8 +20,8 @@
     "lint:fix": "eslint src/ --ext .js --fix"
   },
   "author": {
-    "name": "CodeX",
-    "email": "team@ifmo.su"
+    "name": "mkljczk",
+    "email": "me@mkljczk.pl"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

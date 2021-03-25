@@ -1,3 +1,5 @@
+## it's a fork of editorjs image block that doesn't really make sense to use in your case :p
+
 ![](https://badgen.net/badge/Editor.js/v2.0/blue)
 
 # Image Tool

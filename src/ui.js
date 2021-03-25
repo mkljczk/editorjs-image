@@ -13,10 +13,11 @@ export default class Ui {
    * @param {ImageConfig} ui.config - user config
    * @param {Function} ui.onSelectFile - callback for clicks on Select file button
    */
-  constructor({ api, config, onSelectFile }) {
+  constructor({ api, config, onSelectFile, onUpload }) {
     this.api = api;
     this.config = config;
     this.onSelectFile = onSelectFile;
+    this.onUpload = onUpload;
     this.nodes = {
       wrapper: make('div', [this.CSS.baseClass, this.CSS.wrapper]),
       imageContainer: make('div', [ this.CSS.imageContainer ]),
@@ -111,8 +112,14 @@ export default class Ui {
     button.innerHTML = this.config.buttonContent || `${buttonIcon} Select an Image`;
 
     button.addEventListener('click', () => {
-      this.onSelectFile();
+      window.showURLInput = true;
+      window.showSelectFileModal(true);
     });
+
+    window.setSelectedFile = (...props) => {
+      this.onUpload(...props);
+      window.showSelectFileModal(false);
+    };
 
     return button;
   }

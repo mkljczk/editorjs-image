@@ -39,6 +39,7 @@
  * @property {boolean} stretched - should image be stretched to full width of container
  * @property {object} file — Image file data returned from backend
  * @property {string} file.url — image URL
+ * @property {string} file.href — href
  */
 
 // eslint-disable-next-line
@@ -134,6 +135,7 @@ export default class ImageTool {
           },
         });
       },
+      onUpload: this.onUpload.bind(this),
     });
 
     /**
@@ -228,47 +230,6 @@ export default class ImageTool {
   }
 
   /**
-   * Specify paste handlers
-   *
-   * @public
-   * @see {@link https://github.com/codex-team/editor.js/blob/master/docs/tools.md#paste-handling}
-   * @param {CustomEvent} event - editor.js custom paste event
-   *                              {@link https://github.com/codex-team/editor.js/blob/master/types/tools/paste-events.d.ts}
-   * @returns {void}
-   */
-  async onPaste(event) {
-    switch (event.type) {
-      case 'tag': {
-        const image = event.detail.data;
-
-        /** Images from PDF */
-        if (/^blob:/.test(image.src)) {
-          const response = await fetch(image.src);
-          const file = await response.blob();
-
-          this.uploadFile(file);
-          break;
-        }
-
-        this.uploadUrl(image.src);
-        break;
-      }
-      case 'pattern': {
-        const url = event.detail.data;
-
-        this.uploadUrl(url);
-        break;
-      }
-      case 'file': {
-        const file = event.detail.file;
-
-        this.uploadFile(file);
-        break;
-      }
-    }
-  }
-
-  /**
    * Private methods
    * ̿̿ ̿̿ ̿̿ ̿'̿'\̵͇̿̿\з= ( ▀ ͜͞ʖ▀) =ε/̵͇̿̿/’̿’̿ ̿ ̿̿ ̿̿ ̿̿
    */
@@ -327,12 +288,8 @@ export default class ImageTool {
    * @param {UploadResponseFormat} response - uploading server response
    * @returns {void}
    */
-  onUpload(response) {
-    if (response.success && response.file) {
-      this.image = response.file;
-    } else {
-      this.uploadingFailed('incorrect response: ' + JSON.stringify(response));
-    }
+  onUpload(response, url) {
+    this.image = { url: `/uploads/${response}`, href: url };
   }
 
   /**
